@@ -1,0 +1,243 @@
+# Determining the number of families, genera, species for each plot
+
+families=with(sv.data, table(Family, Altitude))
+genera=with(sv.data, table(Genus, Altitude))
+species=with(sv.data, table(Species, Altitude))
+
+fam.pa=decostand(families, method="pa")
+gen.pa=decostand(genera, method="pa")
+sp.pa=decostand(species, method="pa")
+
+fam.vec=colSums(fam.pa)
+gen.vec=colSums(gen.pa)
+sp.vec=colSums(sp.pa)
+
+alt.vec=c(2437, 2561, 2669, 2700, 2773, 2820, 2860, 2946, 3022, 3093, 3163, 3250, 3288, 3321, 3334)
+new.alt.vec=c(2440, 2560, 2670, 2700, 2770, 2820, 2860, 2950, 3020, 3090, 3160, 3250, 3290, 3320, 3330)
+
+# Figure 1
+
+barplot(matrix(c(fam.vec, gen.vec,sp.vec), nrow=3, byrow=T), beside=T, names.arg=new.alt.vec, legend.text=c("Family", "Genus", "Species"), xlab="Elevation (m)", ylab="Richness", las=2)
+
+library(ape)
+#read in trees
+all.phylo=read.tree("rbcl.matk.newick")
+
+#drop the outgroup tip label for analyses
+
+all.phylo=drop.tip(all.phylo, "Ginkgo_biloba")
+
+# all abund.mat
+
+all.abund.mat=matrix(data=NA, nrow=15, ncol=70)
+row.names(all.abund.mat)=alt.vec
+colnames(all.abund.mat)=all.phylo$tip.label
+
+sp.mat=as.matrix(species)
+row.names(sp.mat)
+
+all.abund.mat[,1]=sp.mat[23,]
+all.abund.mat[,2]=sp.mat[59,]
+all.abund.mat[,3]=sp.mat[67,]
+all.abund.mat[,4]=sp.mat[54,]
+all.abund.mat[,5]=sp.mat[15,]
+all.abund.mat[,6]=sp.mat[66,]
+all.abund.mat[,7]=c(0,3,0,0,0,2,0,0,0,0,0,0,0,0,0)
+all.abund.mat[,8]=sp.mat[79,]
+all.abund.mat[,9]=sp.mat[51,]
+all.abund.mat[,10]=sp.mat[62,]
+all.abund.mat[,11]=sp.mat[46,]
+all.abund.mat[,12]=c(0,0,0,3,0,0,0,0,0,0,0,0,0,0,0)
+all.abund.mat[,13]=sp.mat[39,]
+all.abund.mat[,14]=sp.mat[18,]
+all.abund.mat[,15]=sp.mat[21,]
+all.abund.mat[,16]=sp.mat[26,]
+all.abund.mat[,17]=sp.mat[4,]
+all.abund.mat[,18]=sp.mat[38,]
+all.abund.mat[,19]=sp.mat[58,]
+all.abund.mat[,20]=sp.mat[47,]
+all.abund.mat[,21]=sp.mat[13,]
+all.abund.mat[,22]=sp.mat[24,]
+all.abund.mat[,23]=sp.mat[31,]
+all.abund.mat[,24]=sp.mat[50,]
+all.abund.mat[,25]=sp.mat[36,]
+all.abund.mat[,26]=sp.mat[76,]
+all.abund.mat[,27]=c(0,2,0,0,0,0,0,0,0,0,0,0,0,0,0)
+all.abund.mat[,28]=c(0,0,0,0,0,1,1,0,0,0,0,0,0,0,0)
+all.abund.mat[,29]=sp.mat[74,]
+all.abund.mat[,30]=c(0,0,0,0,0,0,0,0,0,0,0,1,0,0,0)
+all.abund.mat[,31]=sp.mat[43,]
+all.abund.mat[,32]=sp.mat[55,]
+all.abund.mat[,33]=sp.mat[42,]
+all.abund.mat[,34]=sp.mat[7,]
+all.abund.mat[,35]=sp.mat[63,]
+all.abund.mat[,36]=sp.mat[45,]
+all.abund.mat[,37]=sp.mat[48,]
+all.abund.mat[,38]=sp.mat[35,]
+all.abund.mat[,39]=sp.mat[83,]
+all.abund.mat[,40]=sp.mat[49,]
+all.abund.mat[,41]=c(0,0,0,1,0,0,0,0,0,0,0,0,0,0,0)
+all.abund.mat[,42]=sp.mat[68,]
+all.abund.mat[,43]=sp.mat[37,]
+all.abund.mat[,44]=sp.mat[53,]
+all.abund.mat[,45]=sp.mat[32,]
+all.abund.mat[,46]=sp.mat[80,]
+all.abund.mat[,47]=sp.mat[22,]
+all.abund.mat[,48]=sp.mat[56,]
+all.abund.mat[,49]=sp.mat[27,]
+all.abund.mat[,50]=sp.mat[16,]
+all.abund.mat[,51]=sp.mat[10,]
+all.abund.mat[,52]=sp.mat[3,]
+all.abund.mat[,53]=sp.mat[19,]
+all.abund.mat[,54]=c(1,0,0,0,0,1,0,0,0,1,0,0,0,0,0)
+all.abund.mat[,55]=sp.mat[9,]
+all.abund.mat[,56]=sp.mat[33,]
+all.abund.mat[,57]=sp.mat[11,]
+all.abund.mat[,58]=sp.mat[30,]
+all.abund.mat[,59]=sp.mat[5,]
+all.abund.mat[,60]=sp.mat[25,]
+all.abund.mat[,61]=sp.mat[20,]
+all.abund.mat[,62]=sp.mat[52,]
+all.abund.mat[,63]=sp.mat[28,]
+all.abund.mat[,64]=sp.mat[41,]
+all.abund.mat[,65]=sp.mat[57,]
+all.abund.mat[,66]=sp.mat[82,]
+all.abund.mat[,67]=sp.mat[6,]
+all.abund.mat[,68]=sp.mat[29,]
+all.abund.mat[,69]=sp.mat[65,]
+all.abund.mat[,70]=sp.mat[12,]
+
+
+# Faith's Index
+library(picante)
+
+pd.all=ses.pd(all.abund.mat, all.phylo, null.model="taxa.labels", runs=999, iterations=1000)
+
+
+# Mean pairwise distance
+
+mpd.all=ses.mpd(all.abund.mat, cophenetic(all.phylo), null.model="taxa.labels", abundance.weighted=T, runs=999, iterations=1000)
+
+# Mean nearest neighbor distance
+mntd.all=ses.mntd(all.abund.mat, cophenetic(all.phylo), null.model="taxa.labels", abundance.weighted=T, runs=999, iterations=1000)
+
+# Diversity Assessments
+
+library(vegan)
+
+# Richness
+
+richness=specnumber(abund.cdm)
+richness.gen=specnumber(gen.cdm)
+richness.fam=specnumber(fam.cdm)
+
+#Shannon's Diversity H'
+
+shannon=diversity(abund.cdm, index="shannon")
+shannon.gen=diversity(gen.cdm, index="shannon")
+shannon.fam=diversity(fam.cdm, index="shannon")
+
+#Inverse Simpson's Diversity
+
+invsimp=diversity(abund.cdm, index="invsimpson")
+invsimp.gen=diversity(gen.cdm, index="invsimpson")
+invsimp.fam=diversity(fam.cdm, index="invsimpson")
+
+# Simpson's Evenness
+
+even=invsimp/richness
+even.gen=invsimp.gen/richness.gen
+even.fam=invsimp.fam/richness.fam
+
+# Pearson's correlation
+
+cor.test(richness, alt.vec, method="pearson")
+cor.test(richness.gen, alt.vec, method="pearson")
+cor.test(richness.fam, alt.vec, method="pearson")
+cor.test(shannon, alt.vec, method="pearson")
+cor.test(shannon.gen, alt.vec, method="pearson")
+cor.test(shannon.fam, alt.vec, method="pearson")
+cor.test(invsimp, alt.vec, method="pearson")
+cor.test(invsimp.gen, alt.vec, method="pearson")
+cor.test(invsimp.fam, alt.vec, method="pearson")
+cor.test(even, alt.vec, method="pearson")
+cor.test(even.gen, alt.vec, method="pearson")
+cor.test(even.fam, alt.vec, method="pearson")
+
+# Pearson's correlation with phylogenetic metrics
+# Determined for all plots, with and without ferns
+# Determined for all plots except 10, 11 without ferns
+
+cor.test(mntd.all$mntd.obs.z, alt.vec, type="pearson")
+cor.test(mpd.all$mpd.obs.z, alt.vec, type="pearson")
+cor.test(pd.all$pd.obs.z, alt.vec, type="pearson")
+cor.test(mntd.all$mntd.obs, alt.vec, type="pearson")
+cor.test(mpd.all$mpd.obs, alt.vec, type="pearson")
+cor.test(pd.all$pd.obs, alt.vec, type="pearson")
+
+# Plotting significant correlations
+
+# Figure 2
+plot(richness ~ new.alt.vec, xlim=c(2400, 3400), xlab="Elevation(m)", ylab="Richness", pch=16, col="black")
+abline(lm(richness~new.alt.vec), col="black")
+
+plot(shannon ~ new.alt.vec, xlim=c(2400, 3400), xlab="Elevation(m)", ylab="Shannon-Weaver (H´)", pch=16, col="black")
+abline(lm(shannon~new.alt.vec), col="black")
+
+plot(pd ~ new.alt.vec, xlim=c(2400, 3400), ylim=c(0, 2), xlab="Elevation(m)", ylab="Phylogenetic Diversity (PD)", pch=16, col="black")
+abline(lm(pd~new.alt.vec), col="black")
+par(new=T)
+plot(pd.no.ferns ~ new.alt.vec, xlim=c(2400, 3400), ylim=c(0, 2), xlab="Elevation(m)", ylab="Phylogenetic Diversity (PD)", pch=1, col="gray53")
+abline(lm(pd.no.ferns~new.alt.vec), col="gray53")
+
+legend("topright", legend=c("All Species", "Excluding Fern Species"), col=c("black", "gray53"), pch=c(19,1))
+
+plot(mpd ~ new.alt.vec, xlim=c(2400, 3400), ylim=c(0, 0.5), xlab="Elevation(m)", ylab="Mean Phylogenetic Distance (MPD)", pch=16, col="black")
+abline(lm(mpd~new.alt.vec), col="black")
+par(new=T)
+plot(mpd.no.ferns ~ new.alt.vec, xlim=c(2400, 3400), ylim=c(0, 0.5), xlab="Elevation(m)", ylab="Mean Phylogenetic Distance (MPD)", pch=1, col="gray53")
+abline(lm(mpd.no.ferns~new.alt.vec), col="gray53")
+
+legend("topright", legend=c("All Species", "Excluding Fern Species"), col=c("black", "gray53"), pch=c(19,1))
+
+plot(mntd ~ new.alt.vec, xlim=c(2400, 3400), ylim=c(0, 0.3), xlab="Elevation(m)", ylab="Mean Nearest Taxon Distance (MNTD)", pch=16, col="black")
+abline(lm(mntd~new.alt.vec), col="black")
+par(new=T)
+plot(mntd.no.ferns ~ new.alt.vec, xlim=c(2400, 3400), ylim=c(0, 0.3), xlab="Elevation(m)", ylab="Mean Nearest Taxon Distance (MNTD)", pch=1, col="gray53")
+abline(lm(mntd.no.ferns~new.alt.vec), col="gray53")
+
+legend("topleft", legend=c("All Species", "Excluding Fern Species"), col=c("black", "gray53"), pch=c(19,1))
+
+# Figure 4
+# Plot of ses.mpd and ses.mntd with and without the odd plots
+
+par(mfrow=c(2,1))
+plot(mpd.nfern.ses ~ new.alt.vec, xlim=c(2400, 3400), xlab="Elevation(m)", ylab="SES.MPD", pch=16, col="black")
+abline(lm(mpd.nfern.ses~elevation), col="black")
+abline(lm(mpd.nfern.ses.1~elevation.1), col="red")
+
+plot(mntd.nfern.ses ~ new.alt.vec, xlim=c(2400, 3400), xlab="Elevation(m)", ylab="SES.MNTD", pch=16, col="black")
+abline(lm(mntd.nfern.ses~elevation), col="black")
+abline(lm(mntd.nfern.ses.1~elevation.1), col="red")
+
+# Figure S1
+
+plot(overlap$Overlap~rownames(overlap), xaxt="n", type="b", xlab="Elevation (m)", ylab="Number of Species Overlap")
+axis(side=1, at=rownames(overlap), labels=c("2440-2560", "2560-2670", "2670-2700", "2700-2770", 
+"2770-2820", "2820-2860", "2860-2950", "2950-3020", "3020-3090", "3090-3160", "3160-3250", "3250-3290",
+"3290-3320", "3320-3330"), las=2)
+
+plot(overlap$Overlap~overlap[,3], xaxt="n", type="b", xlab="Plots", ylab="Number of Species Overlap")
+axis(side=1, at=overlap[,3], labels=c("1-2", "2-3", "3-4", "4-5", 
+"5-6", "6-7", "7-8", "8-9", "9-10", "10-11", "11-12", "12-13",
+"13-14", "14-15"), las=2)
+
+# Figure S3
+
+library(ape)
+library(geiger)
+libray(phytools)
+
+lab=phylo$node.labels
+plotTree(phylo, offset=1, fsize=0.6)
+nodelabels(lab, frame="n", cex=0.4, adj=-0.5)
