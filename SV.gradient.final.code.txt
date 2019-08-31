@@ -238,6 +238,6 @@ library(ape)
 library(geiger)
 libray(phytools)
 
-lab=phylo$node.labels
-plotTree(phylo, offset=1, fsize=0.6)
+lab=all.phylo$node.label
+plotTree(all.phylo, offset=1, fsize=0.6, ftype="i")
 nodelabels(lab, frame="n", cex=0.4, adj=-0.5)
