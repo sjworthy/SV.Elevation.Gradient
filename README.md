@@ -1,5 +1,7 @@
 # Distribution and Community Assembly of Trees Along an Andean Elevational Gradient
+Code to accompany the publication:
 
+Worthy SJ, Jiménez Paz RA, Pérez AJ, Reynolds A, Cruse-Sanders J, Valencia R, Barone JA, Burgess KS.(2019). Distribution and community assembly of trees along an Andean elevational gradient. Plants 8(9):326.
 
 
 # License
